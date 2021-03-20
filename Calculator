@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: FirstPage());
+  }
+}
+
+class FirstPage extends StatefulWidget {
+  @override
+  _FirstPageState createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
+  final List<String> buttontext = [
+    "9",
+    "8",
+    "7",
+    "6",
+    "5",
+    "4",
+    "3",
+    "2",
+    "1",
+    ".",
+    "0",
+    "=",
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(children: [
+      Expanded(flex: 2, child: Container(color: Colors.green)), //green
+      Expanded(
+        flex: 5,
+        child: Container(
+            color: Colors.purple,
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemCount: buttontext.length,
+                itemBuilder: (context, indext) {
+                  return Buttons('${buttontext[indext]}');
+                }) //builder
+            ), //container
+      ), //buttons
+    ]) //column
+        );
+  }
+}
+
+class Buttons extends StatelessWidget {
+  Buttons(this.text);
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {},
+        child: Text('$text', style :TextStyle (color:Colors.black, fontSize :20) ),
+        style: ElevatedButton.styleFrom(elevation :0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0)) //shape
+            ) //stele
+        );
+  }
+}
