@@ -36,6 +36,7 @@ class _MyWidgetState extends State<MyWidget> {
     "+",
     ".",
     "0",
+    "00",
     "Ans",
   ];
   @override
@@ -44,28 +45,43 @@ class _MyWidgetState extends State<MyWidget> {
     return Scaffold(
         backgroundColor: Colors.deepPurple[100],
         body: Center(
-          child: Column(children: [
-            Expanded(
-              flex: 2, child: Container(color: Colors.purple[200]), //container
-            ),
-            Expanded(
-              flex: 6,
-              child: Container(
-                //color: Colors.deepPurple,
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4),
-                    itemCount: items.length,
-                    itemBuilder: (context, indext) {
-                      return MyButton(
+            child: Column(children: [
+          Expanded(
+            flex: 2, child: Container(color: Colors.purple[200]), //container
+          ),
+          Expanded(
+            flex: 6,
+            child: Container(
+              //color: Colors.deepPurple,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemCount: items.length,
+                itemBuilder: (context, indext) {
+                  if (indext == 0) {
+                    return MyButton(
+                        buttonText: items[indext], buttonColor: Colors.red);
+                  } else if (indext == 1) {
+                    return MyButton(
+                        buttonText: items[indext], buttonColor: Colors.green);
+                  } else if (indext == 2 ||
+                      indext == 3 ||
+                      indext == 7 ||
+                      indext == 11 ||
+                      indext == 15) {
+                    return MyButton(
                         buttonText: items[indext],
-                        buttonColor: Colors.deepPurple,
-                      );
-                    }), //builder
+                        buttonColor: Colors.deepOrange[300]);
+                  }
+                  return MyButton(
+                      buttonText: items[indext],
+                      buttonColor: Colors.deepPurple);
+                }, //builder
               ), //contai er
             ), //expanded
-          ]), //column
-        ) //center
+          ),
+        ]) //column
+            ) //center
         );
   }
 }
@@ -76,18 +92,21 @@ class MyButton extends StatelessWidget {
   final Color buttonColor;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          buttonText,
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        ),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: buttonColor), //decoration
-      ), //container
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            buttonText,
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: buttonColor), //decoration
+        ), //container
+      ),
     ); //padding
   }
 }
