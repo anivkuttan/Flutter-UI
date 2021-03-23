@@ -19,10 +19,10 @@ class MyWidget extends StatefulWidget {
 
 class _MyWidgetState extends State<MyWidget> {
   String questionText = '';
-  String answerText = 'Answer';
+  String answerText = '';
   final List<String> items = <String>[
     "Del",
-    "C",
+    "AC",
     "%",
     "/",
     "7",
@@ -43,6 +43,47 @@ class _MyWidgetState extends State<MyWidget> {
     "Ans",
   ];
 
+  buttonClicked(String buttonText) {
+    // For del button
+    if (buttonText == "Del") {
+      int lastValue = answerText.length - 1;
+      setState(() {
+        answerText = answerText.substring(0, lastValue);
+      });
+    } else if (buttonText == "AC") {
+      setState(() {
+        answerText = '';
+      });
+    } else if (buttonText == "+" ||
+        buttonText == "-" ||
+        buttonText == "x" ||
+        buttonText == "/" ||
+        buttonText == "%") {
+      // For Operators
+      if (buttonText == "+") {
+        buttonAddClicked();
+      } else if (buttonText == "-") {
+        buttonSubClicked();
+      } else if (buttonText == "x") {
+        buttonMultiClicked();
+      } else if (buttonText == "/") {
+        buttonDivideClocked();
+      } else if (buttonText == "%") {
+        buttonModulusClicked();
+      }
+    } else {
+      // For number Buttons
+      setState(() {
+        answerText += buttonText;
+      });
+    }
+  }
+
+  buttonAddClicked() {}
+  buttonSubClicked() {}
+  buttonMultiClicked() {}
+  buttonDivideClocked() {}
+  buttonModulusClicked() {}
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery. of(context).size;
@@ -86,20 +127,19 @@ class _MyWidgetState extends State<MyWidget> {
                     return MyButton(
                         buttonText: items[indext],
                         buttonColor: Colors.red,
+                        // to make function like
+                        // buttonClicked :(){}
+                        // then inside put your function
+                        //like bellow
                         buttonClicked: () {
-                          setState(() {
-                            questionText = '';
-                          });
+                          buttonClicked(items[indext]);
                         });
                   } else if (indext == 1) {
                     return MyButton(
                         buttonText: items[indext],
                         buttonColor: Colors.green,
                         buttonClicked: () {
-                          setState(() {
-                            questionText = questionText.substring(
-                                0, questionText.length - 1);
-                          });
+                          buttonClicked(items[indext]);
                         });
                   } else if (indext == 2 ||
                       indext == 3 ||
@@ -110,18 +150,14 @@ class _MyWidgetState extends State<MyWidget> {
                         buttonText: items[indext],
                         buttonColor: Colors.deepOrange[300],
                         buttonClicked: () {
-                          setState(() {
-                            questionText += items[indext];
-                          });
+                          buttonClicked(items[indext]);
                         });
                   }
                   return MyButton(
                       buttonText: items[indext],
                       buttonColor: Colors.deepPurple,
                       buttonClicked: () {
-                        setState(() {
-                          questionText += items[indext];
-                        });
+                        buttonClicked(items[indext]);
                       });
                 }, //builder
               ), //contai er
@@ -137,7 +173,8 @@ class MyButton extends StatelessWidget {
   MyButton({this.buttonText, this.buttonColor, this.buttonClicked});
   final String buttonText;
   final Color buttonColor;
-  final Function buttonClicked;
+  final buttonClicked;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -153,3 +190,156 @@ class MyButton extends StatelessWidget {
     );
   }
 }
+
+// import 'dart:ffi';
+
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: MainPage(),
+//     );
+//   }
+// }
+
+// class MainPage extends StatefulWidget {
+//   @override
+//   _MainPageState createState() => _MainPageState();
+// }
+
+// class _MainPageState extends State<MainPage> {
+//   String questionText = '';
+//   String answerText = '';
+//   final List<String> items = [
+//     "DEL",
+//     "C",
+//     "%",
+//     "/",
+//     "7",
+//     "8",
+//     "9",
+//     "X",
+//     "4",
+//     "5",
+//     "6",
+//     "-",
+//     "1",
+//     "2",
+//     "3",
+//     "+",
+//     "00",
+//     "0",
+//     ".",
+//     "Ans",
+//   ];
+
+//   buttonPressed(int indext) {
+//     setState(() {
+//       questionText += items[indext];
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Size size = MediaQuery.of(context).size;
+//     return Scaffold(
+//       backgroundColor: Colors.deepPurple[300],
+//       body: Column(children: [
+//         Expanded(
+//           flex: 3,
+//           child: Container(
+//             padding: EdgeInsets.all(20),
+//             color: Colors.purple[200],
+//             width: size.width, // height is controlled by flex
+//             alignment: Alignment.bottomRight,
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: [
+//                 Text(
+//                   questionText,
+//                   style: TextStyle(
+//                     fontSize: 20,
+//                     color: Colors.black,
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   height: 50,
+//                 ),
+//                 Text(
+//                   answerText,
+//                   style: TextStyle(fontSize: 50),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//         Expanded(
+//           flex: 6,
+//           child: Container(
+//             child: GridView.builder(
+//                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                     crossAxisCount: 4),
+//                 itemCount: items.length,
+//                 itemBuilder: (context, indext) {
+//                   if (indext == 0) {
+//                     return MyButton(
+//                         buttonColor: Colors.red,
+//                         buttonText: items[indext],
+//                         buttonFunction: buttonPressed(indext));
+//                   } else if (indext == 1) {
+//                     return MyButton(
+//                         buttonText: items[indext],
+//                         buttonColor: Colors.green,
+//                         buttonFunction: buttonPressed(indext));
+//                   } else if (indext == 2 ||
+//                       indext == 3 ||
+//                       indext == 7 ||
+//                       indext == 11 ||
+//                       indext == 15 ||
+//                       indext == 19) {
+//                     return MyButton(
+//                         buttonText: items[indext],
+//                         buttonColor: Colors.purple[500],
+//                         buttonFunction: buttonPressed(indext));
+//                   }
+//                   return MyButton(
+//                       buttonColor: Colors.deepPurple,
+//                       buttonText: items[indext],
+//                       buttonFunction: buttonPressed(indext));
+//                 }),
+//           ),
+//         ),
+//       ]),
+//     );
+//   }
+// }
+
+// class MyButton extends StatelessWidget {
+//   final String buttonText;
+//   final Color buttonColor;
+//   final Function buttonFunction;
+//   MyButton({this.buttonColor, this.buttonText, this.buttonFunction});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.all(10),
+//       child: ElevatedButton(
+//         onPressed: buttonFunction,
+//         child: Text(buttonText),
+//         style: ElevatedButton.styleFrom(
+//           primary: buttonColor,
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(40),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
