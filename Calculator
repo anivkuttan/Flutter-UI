@@ -20,6 +20,9 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   String questionText = '';
   String answerText = '';
+  String operator;
+  num number1;
+  num number2;
   final List<String> items = <String>[
     "Del",
     "AC",
@@ -40,7 +43,7 @@ class _MyWidgetState extends State<MyWidget> {
     ".",
     "0",
     "00",
-    "Ans",
+    "=",
   ];
 
   buttonClicked(String buttonText) {
@@ -53,23 +56,36 @@ class _MyWidgetState extends State<MyWidget> {
     } else if (buttonText == "AC") {
       setState(() {
         answerText = '';
+        number1 = null;
+        number2 = null;
+        operator = null;
       });
     } else if (buttonText == "+" ||
         buttonText == "-" ||
         buttonText == "x" ||
         buttonText == "/" ||
         buttonText == "%") {
+      number1 = int.parse(answerText);
+      setState(() {
+        answerText = '';
+      });
       // For Operators
       if (buttonText == "+") {
-        buttonAddClicked();
+        operator = '+';
       } else if (buttonText == "-") {
-        buttonSubClicked();
+        operator = '-';
       } else if (buttonText == "x") {
-        buttonMultiClicked();
+        operator = 'x';
       } else if (buttonText == "/") {
-        buttonDivideClocked();
+        operator = '/';
       } else if (buttonText == "%") {
         buttonModulusClicked();
+      }
+    } else if (buttonText == "=") {
+      if (operator == '+') {
+        number2 = int.parse(answerText);
+
+        buttonAddClicked(number1, number2);
       }
     } else {
       // For number Buttons
@@ -79,7 +95,13 @@ class _MyWidgetState extends State<MyWidget> {
     }
   }
 
-  buttonAddClicked() {}
+  buttonAddClicked(num number1, num number2) {
+    num addValue = number1 + number2;
+    setState(() {
+      answerText = addValue.toString();
+    });
+  }
+
   buttonSubClicked() {}
   buttonMultiClicked() {}
   buttonDivideClocked() {}
