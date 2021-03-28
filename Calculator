@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,11 +19,6 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  String questionText = '';
-  String answerText = '';
-  String operator;
-  num number1;
-  num number2;
   final List<String> items = <String>[
     "Del",
     "AC",
@@ -43,73 +39,33 @@ class _MyWidgetState extends State<MyWidget> {
     ".",
     "0",
     "00",
-    "=",
+    "Ans",
   ];
+  String questionText = '';
+  String resultText = '';
 
-  buttonClicked(String buttonText) {
-    // For del button
-    if (buttonText == "Del") {
-      int lastValue = answerText.length - 1;
-      setState(() {
-        answerText = answerText.substring(0, lastValue);
-      });
-    } else if (buttonText == "AC") {
-      setState(() {
-        answerText = '';
-        number1 = null;
-        number2 = null;
-        operator = null;
-      });
-    } else if (buttonText == "+" ||
-        buttonText == "-" ||
-        buttonText == "x" ||
-        buttonText == "/" ||
-        buttonText == "%") {
-      number1 = int.parse(answerText);
-      setState(() {
-        answerText = '';
-      });
-      // For Operators
-      if (buttonText == "+") {
-        operator = '+';
-      } else if (buttonText == "-") {
-        operator = '-';
-      } else if (buttonText == "x") {
-        operator = 'x';
-      } else if (buttonText == "/") {
-        operator = '/';
-      } else if (buttonText == "%") {
-        buttonModulusClicked();
-      }
-    } else if (buttonText == "=") {
-      if (operator == '+') {
-        number2 = int.parse(answerText);
-
-        buttonAddClicked(number1, number2);
-      }
-    } else {
-      // For number Buttons
-      setState(() {
-        answerText += buttonText;
-      });
-    }
-  }
-
-  buttonAddClicked(num number1, num number2) {
-    num addValue = number1 + number2;
+  buttonClicked(String btnText) {
     setState(() {
-      answerText = addValue.toString();
+      if (btnText == 'Del') {
+        questionText = questionText.substring(0, questionText.length - 1);
+      } else if (btnText == 'AC') {
+        questionText = '';
+        resultText = '';
+      } else if (btnText == 'Ans') {
+        questionText = questionText.replaceAll('x', '*');
+        Parser p = Parser();
+        Expression question = p.parse(questionText);
+        ContextModel cm = ContextModel();
+        resultText = '${question.evaluate(EvaluationType.REAL, cm)}';
+      } else {
+        questionText += btnText;
+      }
     });
   }
 
-  buttonSubClicked() {}
-  buttonMultiClicked() {}
-  buttonDivideClocked() {}
-  buttonModulusClicked() {}
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery. of(context).size;
-
     return Scaffold(
         backgroundColor: Colors.deepPurple[100],
         body: Center(
@@ -123,14 +79,14 @@ class _MyWidgetState extends State<MyWidget> {
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   Text(questionText,
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 35,
                         color: Colors.black,
                       ),
                       textAlign: TextAlign.end), //topText
                   SizedBox(height: 50),
-                  Text(answerText,
+                  Text(resultText,
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 40,
                       ),
                       textAlign: TextAlign.start),
                 ]) //colum
@@ -205,163 +161,12 @@ class MyButton extends StatelessWidget {
         onPressed: buttonClicked,
         child: Text(buttonText),
         style: ElevatedButton.styleFrom(
-            primary: buttonColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10))), //style
+          primary: buttonColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ), //style
       ), //button
     );
   }
 }
-
-// import 'dart:ffi';
-
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: MainPage(),
-//     );
-//   }
-// }
-
-// class MainPage extends StatefulWidget {
-//   @override
-//   _MainPageState createState() => _MainPageState();
-// }
-
-// class _MainPageState extends State<MainPage> {
-//   String questionText = '';
-//   String answerText = '';
-//   final List<String> items = [
-//     "DEL",
-//     "C",
-//     "%",
-//     "/",
-//     "7",
-//     "8",
-//     "9",
-//     "X",
-//     "4",
-//     "5",
-//     "6",
-//     "-",
-//     "1",
-//     "2",
-//     "3",
-//     "+",
-//     "00",
-//     "0",
-//     ".",
-//     "Ans",
-//   ];
-
-//   buttonPressed(int indext) {
-//     setState(() {
-//       questionText += items[indext];
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     return Scaffold(
-//       backgroundColor: Colors.deepPurple[300],
-//       body: Column(children: [
-//         Expanded(
-//           flex: 3,
-//           child: Container(
-//             padding: EdgeInsets.all(20),
-//             color: Colors.purple[200],
-//             width: size.width, // height is controlled by flex
-//             alignment: Alignment.bottomRight,
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.end,
-//               children: [
-//                 Text(
-//                   questionText,
-//                   style: TextStyle(
-//                     fontSize: 20,
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 50,
-//                 ),
-//                 Text(
-//                   answerText,
-//                   style: TextStyle(fontSize: 50),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           flex: 6,
-//           child: Container(
-//             child: GridView.builder(
-//                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                     crossAxisCount: 4),
-//                 itemCount: items.length,
-//                 itemBuilder: (context, indext) {
-//                   if (indext == 0) {
-//                     return MyButton(
-//                         buttonColor: Colors.red,
-//                         buttonText: items[indext],
-//                         buttonFunction: buttonPressed(indext));
-//                   } else if (indext == 1) {
-//                     return MyButton(
-//                         buttonText: items[indext],
-//                         buttonColor: Colors.green,
-//                         buttonFunction: buttonPressed(indext));
-//                   } else if (indext == 2 ||
-//                       indext == 3 ||
-//                       indext == 7 ||
-//                       indext == 11 ||
-//                       indext == 15 ||
-//                       indext == 19) {
-//                     return MyButton(
-//                         buttonText: items[indext],
-//                         buttonColor: Colors.purple[500],
-//                         buttonFunction: buttonPressed(indext));
-//                   }
-//                   return MyButton(
-//                       buttonColor: Colors.deepPurple,
-//                       buttonText: items[indext],
-//                       buttonFunction: buttonPressed(indext));
-//                 }),
-//           ),
-//         ),
-//       ]),
-//     );
-//   }
-// }
-
-// class MyButton extends StatelessWidget {
-//   final String buttonText;
-//   final Color buttonColor;
-//   final Function buttonFunction;
-//   MyButton({this.buttonColor, this.buttonText, this.buttonFunction});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: EdgeInsets.all(10),
-//       child: ElevatedButton(
-//         onPressed: buttonFunction,
-//         child: Text(buttonText),
-//         style: ElevatedButton.styleFrom(
-//           primary: buttonColor,
-//           shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(40),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
