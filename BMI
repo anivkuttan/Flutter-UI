@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<bool> isSelected = [false, false];
+  List<bool> isSelected = [true, false];
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
 
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                 child: TextField(
                   controller: heightController,
                   decoration: InputDecoration(
-                    labelText: 'Height',
+                    hintText: 'Weight',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 child: TextField(
                   controller: weightController,
                   decoration: InputDecoration(
-                    labelText: 'Weight',
+                    hintText: 'Height',
                     border: OutlineInputBorder(),
                   ),
                 ),
