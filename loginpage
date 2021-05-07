@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      body: ListView(padding: const EdgeInsets.all(34.0), children: [
+        buildTextField(hintText: 'Email', icon: Icons.email),
+        SizedBox(
+          height: 8,
+        ),
+        buildTextField(hintText: 'Password', icon: Icons.lock),
+      ]),
+    );
+  }
+
+  Widget buildTextField({String hintText, IconData icon}) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+            prefixIcon: Icon(icon),
+            contentPadding: EdgeInsets.all(8.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            hintText: hintText),
+      ),
+    );
+  }
+}
