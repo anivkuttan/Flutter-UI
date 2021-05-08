@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String userEmail;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isPasswordVisibile = true;
   final TextEditingController emailController = TextEditingController();
@@ -42,10 +43,34 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.grey[200],
       body: Form(
         key: formKey,
-        //  autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
+            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10),
             children: [
+              Text(
+                'Hello Again!',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                'Welcome',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                'back',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                height: 8,
+              ),
               TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -70,10 +95,15 @@ class _LoginPageState extends State<LoginPage> {
                     if (value.isEmpty) {
                       return 'Please Enter The Email';
                     }
-                    return '';
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    setState(() {
+                      userEmail = value;
+                    });
                   }),
               SizedBox(
-                height: 8,
+                height: 15,
               ),
               Card(
                 shape: RoundedRectangleBorder(
@@ -104,13 +134,32 @@ class _LoginPageState extends State<LoginPage> {
                 height: 45,
                 width: deviceSize.width,
                 child: ElevatedButton(
-                    child: Text('Submit'),
-                    onPressed: () {
-                      setState(() {
-                        formKey.currentState.validate();
-                      });
-                    }),
-              )
+                  child: Text('Sign in'),
+                  onPressed: () {
+                    var form = formKey.currentState;
+                    if (form.validate()) {
+                      form.save();
+                    }
+                    formKey.currentState.validate();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 8),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                TextButton(
+                  child: Text('Forgot Your Password ?'),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  child: Text('Sign Up'),
+                  onPressed: () {},
+                ),
+              ]),
             ]),
       ),
     );
