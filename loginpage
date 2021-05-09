@@ -160,6 +160,10 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {},
                 ),
               ]),
+              SizedBox(
+                height: 20,
+              ),
+              Image.asset("assets/images.jpeg", height: 300, fit: BoxFit.cover),
             ]),
       ),
     );
