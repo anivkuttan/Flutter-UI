@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currentIndext = 0;
   String bmiText = '';
   List<bool> isSelected = [true, false];
   TextEditingController heightController = TextEditingController();
@@ -33,75 +35,80 @@ class _HomePageState extends State<HomePage> {
         title: Text('BMI'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                height: 40,
-                width: 200,
-                child: TextField(
-                  controller: weightController,
-                  decoration: InputDecoration(
-                    hintText: 'Weight',
-                    border: OutlineInputBorder(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildToggleButton('Male', 1),
+                buildToggleButton('Female', 0),
+              ],
+            ),
+            SizedBox(
+              height: 40,
+              width: 200,
+              child: TextField(
+                controller: weightController,
+                decoration: InputDecoration(
+                  hintText: 'Weight',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+              width: 200,
+              child: TextField(
+                controller: heightController,
+                decoration: InputDecoration(
+                  hintText: 'Height',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            ToggleButtons(
+                children: [
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Icon(Icons.add),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 40,
-                width: 200,
-                child: TextField(
-                  controller: heightController,
-                  decoration: InputDecoration(
-                    hintText: 'Height',
-                    border: OutlineInputBorder(),
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Icon(Icons.remove),
                   ),
-                ),
+                ],
+                isSelected: isSelected,
+                selectedColor: Colors.black,
+                fillColor: Colors.green,
+                onPressed: (int indext) {
+                  setState(() {
+                    isSelected[indext] = !isSelected[indext];
+                  });
+                }),
+            Text(
+              'Your BMI Vaue is $bmiText',
+              style: TextStyle(fontSize: 30),
+            ),
+            SizedBox(
+              height: 70,
+              width: 320,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    double heigth = double.parse(heightController.text);
+                    double weight = double.parse(weightController.text);
+                    calculateBmi(heigth, weight);
+                  });
+                },
+                child: Text('Calculate'),
               ),
-              ToggleButtons(
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Icon(Icons.add),
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Icon(Icons.remove),
-                    ),
-                  ],
-                  isSelected: isSelected,
-                  selectedColor: Colors.black,
-                  fillColor: Colors.green,
-                  onPressed: (int indext) {
-                    setState(() {
-                      isSelected[indext] = !isSelected[indext];
-                    });
-                  }),
-              Text(
-                'Your BMI Vaue is $bmiText',
-                style: TextStyle(fontSize: 30),
-              ),
-              SizedBox(
-                height: 70,
-                width: 320,
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      double heigth = double.parse(heightController.text);
-                      double weight = double.parse(weightController.text);
-                      calculateBmi(heigth, weight);
-                    });
-                  },
-                  child: Text('Calculate'),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -113,5 +120,27 @@ class _HomePageState extends State<HomePage> {
     double weight = weightvalue;
     num bmi = weight ~/ (heightPower);
     return bmiText = bmi.toString();
+  }
+
+  changeIdext(int indext) {
+    setState(() {
+      currentIndext = indext;
+    });
+  }
+
+  Widget buildToggleButton(String name, int indext) {
+    return SizedBox(
+      height: 90,
+      width: 90,
+      child: ElevatedButton(
+          child: Text(name),
+          onPressed: () {
+            changeIdext(indext);
+          },
+          style: ElevatedButton.styleFrom(
+              primary: currentIndext == indext
+                  ? Colors.amber[300]
+                  : Colors.blue[300])),
+    );
   }
 }
