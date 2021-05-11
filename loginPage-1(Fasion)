@@ -1,0 +1,514 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(Login());
+}
+
+class Login extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login',
+      home: //ForgotPasswordPage(),
+          LoginPage(),
+      //SignUpPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool isPasswordVisible = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Let's Make background image
+          Positioned.fill(
+            child: Image.asset('assets/girl.jpg',
+                fit: BoxFit.cover,
+                color: Colors.black54,
+                colorBlendMode: BlendMode.darken),
+          ),
+          Positioned(
+            top: 10,
+            left: 20,
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                onPressed: () {}),
+          ),
+          Positioned.fill(
+            top: 80,
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(children: [
+                Text(
+                  'Welcome',
+                  style: TextStyle(fontSize: 45, color: Colors.white),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Enter your Details to log in',
+                  style: TextStyle(fontSize: 12, color: Colors.white),
+                ),
+                SizedBox(height: 24),
+                TextField(
+                  controller: emailController,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    suffixIcon: IconButton(
+                        color: Colors.orange,
+                        icon: emailController.text.isEmpty
+                            ? SizedBox(
+                                width: 0,
+                              )
+                            : Icon(Icons.close),
+                        onPressed: () {
+                          emailController.clear();
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 12),
+                TextField(
+                  controller: passwordController,
+                  obscureText: isPasswordVisible,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    suffixIcon: IconButton(
+                        color: Colors.white70,
+                        icon: Icon(isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.orange)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    child: Text(
+                      'Forgot Password ?',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage());
+                      Navigator.push(context, route);
+                    },
+                  ),
+                ),
+                SizedBox(height: 12),
+                buildButton('LOGIN', Colors.orange, loginButtonPressed),
+                SizedBox(height: 100),
+                // Expanded(child: Container()),
+                Text(
+                  'Or create an account using social media',
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                buildButton('facebook', Colors.blue, facebookButtonPrssed),
+                SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an account?",
+                        style: TextStyle(color: Colors.white)),
+                    TextButton(
+                        child: Text('Sign Up'),
+                        onPressed: () {
+                          Route route = MaterialPageRoute(
+                              builder: (context) => SignUpPage());
+                          Navigator.push(context, route);
+                        })
+                  ],
+                ),
+              ]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void loginButtonPressed() {}
+
+  void facebookButtonPrssed() {}
+
+  Widget buildButton(String buttonName, Color color, Function buttonPressed) {
+    return SizedBox(
+      height: 45,
+      width: double.infinity,
+      child: ElevatedButton(
+        child: Text(
+          buttonName,
+        ),
+        onPressed: buttonPressed,
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ForgotPasswordPage extends StatefulWidget {
+  @override
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  TextEditingController emailController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('Fogot Password'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
+      body: Stack(children: [
+        Positioned.fill(
+          child: Image.asset('assets/girl2.jpg',
+              fit: BoxFit.cover,
+              colorBlendMode: BlendMode.darken,
+              color: Colors.black54),
+        ),
+        Positioned.fill(
+          top: 50,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Center(
+                child: Text(
+                  'Forgot Your Password?',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                'Enter your email address below to get a password  recovery link',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: emailController,
+                style: TextStyle(color: Colors.white70),
+                cursorColor: Colors.orange,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  suffixIcon: IconButton(
+                      color: Colors.orange,
+                      icon: emailController.text.isEmpty
+                          ? SizedBox(
+                              width: 0,
+                            )
+                          : Icon(Icons.close),
+                      onPressed: () {
+                        emailController.clear();
+                      }),
+                  hintStyle: TextStyle(color: Colors.white60),
+                  fillColor: Colors.white.withOpacity(0.20),
+                  filled: true,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    borderSide: BorderSide(color: Colors.white30),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              buildButton('Sent', Colors.orange, () {}),
+            ]),
+          ),
+        )
+      ]),
+    );
+  }
+
+  Widget buildButton(String buttonName, Color color, Function buttonPressed) {
+    return SizedBox(
+      height: 45,
+      width: double.infinity,
+      child: ElevatedButton(
+        child: Text(
+          buttonName,
+        ),
+        onPressed: buttonPressed,
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  bool isPasswordVisible = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('Sign Up'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Stack(children: [
+        Positioned.fill(
+          child: Image.asset('assets/flash.jpeg',
+              fit: BoxFit.cover,
+              color: Colors.black45,
+              colorBlendMode: BlendMode.darken),
+        ),
+        Positioned.fill(
+          top: 50,
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Enter the details below to create your account',
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: nameController,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Name',
+                    suffixIcon: IconButton(
+                        color: Colors.orange,
+                        icon: nameController.text.isEmpty
+                            ? SizedBox(
+                                width: 0,
+                              )
+                            : Icon(Icons.close),
+                        onPressed: () {
+                          nameController.clear();
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: emailController,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    suffixIcon: IconButton(
+                        color: Colors.orange,
+                        icon: emailController.text.isEmpty
+                            ? SizedBox(
+                                width: 0,
+                              )
+                            : Icon(Icons.close),
+                        onPressed: () {
+                          emailController.clear();
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: passwordController,
+                  obscureText: isPasswordVisible,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    suffixIcon: IconButton(
+                        color: Colors.white70,
+                        icon: Icon(isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.orange)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: confirmPasswordController,
+                  obscureText: isPasswordVisible,
+                  style: TextStyle(color: Colors.white70),
+                  cursorColor: Colors.orange,
+                  decoration: InputDecoration(
+                    hintText: 'Confirm Password',
+                    suffixIcon: IconButton(
+                        color: Colors.white70,
+                        icon: Icon(isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        }),
+                    hintStyle: TextStyle(color: Colors.white60),
+                    fillColor: Colors.white.withOpacity(0.20),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide(color: Colors.orange)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      borderSide: BorderSide(color: Colors.white30),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                buildButton('SignUp', Colors.orange, () {}),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Alredy have an account?",
+                        style: TextStyle(color: Colors.white)),
+                    TextButton(
+                        child: Text('Log In'),
+                        onPressed: () {
+                          Route route = MaterialPageRoute(
+                              builder: (context) => LoginPage());
+                          Navigator.push(context, route);
+                        })
+                  ],
+                ),
+              ],
+            ),
+          ),
+        )
+      ]),
+    );
+  }
+
+  Widget buildButton(String buttonName, Color color, Function buttonPressed) {
+    return SizedBox(
+      height: 45,
+      width: double.infinity,
+      child: ElevatedButton(
+        child: Text(
+          buttonName,
+        ),
+        onPressed: buttonPressed,
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+    );
+  }
+}
