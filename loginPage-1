@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(Login());
+}
+
+class Login extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login',
+      home: LoginPage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Let's Make background image
+          Positioned.fill(
+            child: Image.asset('assets/girl.jpg',
+                fit: BoxFit.cover,
+                color: Colors.black54,
+                colorBlendMode: BlendMode.darken),
+          ),
+          Positioned(
+            top: 10,
+            left: 20,
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                onPressed: () {}),
+          ),
+          Positioned.fill(
+            top: 80,
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(children: [
+                Text(
+                  'Welcome',
+                  style: TextStyle(fontSize: 45, color: Colors.white),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Enter your Details to log in',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                SizedBox(height: 24),
+                buildTextField('Email'),
+                SizedBox(height: 12),
+                buildTextField('Password'),
+                SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    child: Text('Forgot Password ?',
+                        style: TextStyle(color: Colors.white)),
+                    onPressed: () {},
+                  ),
+                ),
+                SizedBox(height: 12),
+                buildButton('LOGIN', Colors.orange),
+                SizedBox(height: 30),
+                Text(
+                  'Or create an account using social media',
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 12),
+                buildButton('facebook', Colors.blue),
+                SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an account?",
+                        style: TextStyle(color: Colors.white)),
+                    TextButton(child: Text('Sign Up'), onPressed: () {})
+                  ],
+                )
+              ]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildButton(String buttonName, Color color) {
+    return SizedBox(
+      height: 40,
+      width: double.infinity,
+      child: ElevatedButton(
+        child: Text(
+          buttonName,
+        ),
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(String hintText) {
+    return TextField(
+      style: TextStyle(color: Colors.white70),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.white60),
+        fillColor: Colors.white.withOpacity(0.20),
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+      ),
+    );
+  }
+}
