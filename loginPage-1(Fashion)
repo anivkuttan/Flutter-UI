@@ -207,6 +207,14 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   TextEditingController emailController = TextEditingController();
   @override
+  void initState() {
+    super.initState();
+    emailController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -315,6 +323,18 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   bool isPasswordVisible = true;
+  bool isconfirmPasswordVisible = true;
+  @override
+  void initState() {
+    super.initState();
+    nameController.addListener(() {
+      setState(() {});
+    });
+    emailController.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -439,19 +459,20 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height: 20),
                 TextField(
                   controller: confirmPasswordController,
-                  obscureText: isPasswordVisible,
+                  obscureText: isconfirmPasswordVisible,
                   style: TextStyle(color: Colors.white70),
                   cursorColor: Colors.orange,
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
                     suffixIcon: IconButton(
                         color: Colors.white70,
-                        icon: Icon(isPasswordVisible
+                        icon: Icon(isconfirmPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
-                            isPasswordVisible = !isPasswordVisible;
+                            isconfirmPasswordVisible =
+                                !isconfirmPasswordVisible;
                           });
                         }),
                     hintStyle: TextStyle(color: Colors.white60),
