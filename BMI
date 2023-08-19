@@ -3,13 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -17,8 +19,10 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI'),
+        title: const Text('BMI'),
         centerTitle: true,
       ),
       body: Padding(
@@ -52,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               width: 200,
               child: TextField(
                 controller: weightController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Weight',
                   border: OutlineInputBorder(),
                 ),
@@ -63,14 +67,23 @@ class _HomePageState extends State<HomePage> {
               width: 200,
               child: TextField(
                 controller: heightController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Height',
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             ToggleButtons(
-                children: [
+                isSelected: isSelected,
+                selectedColor: Colors.black,
+                fillColor: Colors.green,
+                onPressed: (int indext) {
+                  // print(indext);
+                  setState(() {
+                    isSelected[indext] = !isSelected[indext];
+                  });
+                },
+                children: const [
                   SizedBox(
                     height: 100,
                     width: 100,
@@ -81,18 +94,10 @@ class _HomePageState extends State<HomePage> {
                     width: 100,
                     child: Icon(Icons.remove),
                   ),
-                ],
-                isSelected: isSelected,
-                selectedColor: Colors.black,
-                fillColor: Colors.green,
-                onPressed: (int indext) {
-                  setState(() {
-                    isSelected[indext] = !isSelected[indext];
-                  });
-                }),
+                ]),
             Text(
               'Your BMI Vaue is $bmiText',
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
             SizedBox(
               height: 70,
@@ -105,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                     calculateBmi(heigth, weight);
                   });
                 },
-                child: Text('Calculate'),
+                child: const Text('Calculate'),
               ),
             ),
           ],
@@ -116,7 +121,7 @@ class _HomePageState extends State<HomePage> {
 
   String calculateBmi(double heightvalue, double weightvalue) {
     double height = heightvalue / 100;
-    double heightPower = pow(height, 2);
+    num heightPower = pow(height, 2);
     double weight = weightvalue;
     num bmi = weight ~/ (heightPower);
     return bmiText = bmi.toString();
@@ -133,14 +138,14 @@ class _HomePageState extends State<HomePage> {
       height: 90,
       width: 90,
       child: ElevatedButton(
-          child: Text(name),
           onPressed: () {
             changeIdext(indext);
           },
           style: ElevatedButton.styleFrom(
-              primary: currentIndext == indext
+              backgroundColor: currentIndext == indext
                   ? Colors.amber[300]
-                  : Colors.blue[300])),
+                  : Colors.blue[300]),
+          child: Text(name)),
     );
   }
 }
