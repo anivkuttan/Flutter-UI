@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
         body: MyWidgetClass(),
       ), //scaffold
@@ -14,19 +16,19 @@ class MyApp extends StatelessWidget {
 }
 
 class MyWidgetClass extends StatefulWidget {
+  const MyWidgetClass({super.key});
+
   @override
-  _MyWidgetClassState createState() => _MyWidgetClassState();
+  State createState() => _MyWidgetClassState();
 }
 
-class _MyWidgetClassState extends State<MyWidgetClass>{
-  
+class _MyWidgetClassState extends State<MyWidgetClass> {
   Decoration boxdecoration = BoxDecoration(
-  
-  color:Colors.pink,
-    border:Border.all(),
-    borderRadius:BorderRadius.circular(23),
-  ) ;
-  
+    color: Colors.pink,
+    border: Border.all(),
+    borderRadius: BorderRadius.circular(23),
+  );
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
@@ -43,11 +45,11 @@ class _MyWidgetClassState extends State<MyWidgetClass>{
 
       SliverGrid(
         delegate: SliverChildBuilderDelegate((context, index) {
-          return Container(decoration:boxdecoration
-                           
-                           
-                           
-                      , height: 100, width: 100,margin:const EdgeInsets.all(20) );
+          return Container(
+              decoration: boxdecoration,
+              height: 100,
+              width: 100,
+              margin: const EdgeInsets.all(20));
         }, childCount: 25), //builderdeligate
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
