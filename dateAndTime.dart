@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -29,14 +29,13 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Date And Time'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              Date(),
-              Time(),
-              DateAndTime(),
-            ]),
+      body: const Center(
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Date(),
+          Time(),
+          DateAndTime(),
+        ]),
       ),
     );
   }
@@ -46,20 +45,20 @@ class Date extends StatefulWidget {
   const Date({Key? key}) : super(key: key);
 
   @override
-  _DateState createState() => _DateState();
+  State createState() => _DateState();
 }
 
 class _DateState extends State<Date> {
   DateTime date = DateTime(2022, 1, 07);
   Future<void> getDate(BuildContext context) async {
-    DateTime? _pickedDate = await showDatePicker(
+    DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime(2050));
-    if (_pickedDate != null) {
+    if (pickedDate != null) {
       setState(() {
-        date = _pickedDate;
+        date = pickedDate;
       });
     }
   }
@@ -98,18 +97,18 @@ class Time extends StatefulWidget {
   const Time({Key? key}) : super(key: key);
 
   @override
-  _TimeState createState() => _TimeState();
+  State createState() => _TimeState();
 }
 
 class _TimeState extends State<Time> {
-  TimeOfDay time =const TimeOfDay(hour: 12,minute: 30);
+  TimeOfDay time = const TimeOfDay(hour: 12, minute: 30);
 
   Future<void> getTime(BuildContext context) async {
-    TimeOfDay? _time = await showTimePicker(
-        context: context, initialTime: time);
-    if (_time != null) {
+    TimeOfDay? time =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (time != null) {
       setState(() {
-        time = _time;
+        time = time;
       });
     }
   }
@@ -148,24 +147,28 @@ class DateAndTime extends StatefulWidget {
   const DateAndTime({Key? key}) : super(key: key);
 
   @override
-  _DateAndTimeState createState() => _DateAndTimeState();
+  State createState() => _DateAndTimeState();
 }
 
 class _DateAndTimeState extends State<DateAndTime> {
   DateTime dateAndTime = DateTime(2022, 3, 4, 8, 40);
 
   Future<void> getDateAndTime(BuildContext context) async {
-    DateTime? _date = await showDatePicker(
+    TimeOfDay? time;
+    DateTime? date = await showDatePicker(
         context: context,
         initialDate: dateAndTime,
         firstDate: DateTime(2010),
         lastDate: DateTime(2050));
 
-    TimeOfDay? _time =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (_date != null && _time != null) {
-      DateTime newDateAndTime = DateTime(
-          _date.year, _date.month, _date.day, _time.hour, _time.minute);
+    if (mounted) {
+      time =
+          await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    }
+
+    if (date != null && time != null) {
+      DateTime newDateAndTime =
+          DateTime(date.year, date.month, date.day, time.hour, time.minute);
       setState(() {
         dateAndTime = newDateAndTime;
       });
