@@ -38,12 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<String> images = [
-    'assets/images/beer.jpg',
-    'assets/images/man.webp',
-    'assets/images/sunrise.jpg',
-    'assets/images/tree.jpg',
-    'assets/images/lion.jpg',
-    'assets/images/love.jpg',
+    'https://images.unsplash.com/photo-1619884889432-b242fdee532a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c2VhcmNofGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60',
+    'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2VhcmNofGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60',
+    'https://plus.unsplash.com/premium_photo-1670508511045-1b9d41253f25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2VhcmNofGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60',
+    'https://plus.unsplash.com/premium_photo-1663099407652-82aa5350a364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNlYXJjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60',
+    'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHNlYXJjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60',
   ];
   int currentIndex = 0;
   @override
@@ -62,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(images[currentIndex]),
+                    image: NetworkImage(images[currentIndex]),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -91,10 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   widthFactor: 0.7,
                   child: Container(
                     alignment: const Alignment(0, 0),
-                    child: const Text(
-                      'Hello',
-                      style: TextStyle(fontSize: 30, color: Colors.white),
-                    ),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(24),
@@ -103,6 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         image: AssetImage(images[index]),
                         fit: BoxFit.cover,
                       ),
+                    ),
+                    child: const Text(
+                      'Hello',
+                      style: TextStyle(fontSize: 30, color: Colors.white),
                     ),
                   ),
                 );
