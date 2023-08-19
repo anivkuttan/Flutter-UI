@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 //import 'Home_Page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
 }
 
-
 //import 'package:flutter/material.dart';
 //import 'package:sample/Edit_page.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -28,17 +31,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
       ),
       body: Column(
         children: [
-          Placeholder(),
+          const Placeholder(),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => EditPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const EditPage()));
             },
-            child: Text('Add'),
+            child: const Text('Add'),
           )
         ],
       ),
@@ -49,8 +52,10 @@ class _HomePageState extends State<HomePage> {
 //import 'package:flutter/material.dart';
 
 class EditPage extends StatefulWidget {
+  const EditPage({super.key});
+
   @override
-  _EditPageState createState() => _EditPageState();
+  State createState() => _EditPageState();
 }
 
 class _EditPageState extends State<EditPage> {
@@ -62,21 +67,21 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit'), backgroundColor: Colors.teal),
+      appBar: AppBar(title: const Text('Edit'), backgroundColor: Colors.teal),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Form(
             child: Column(
           children: [
             textField(nameController, 'Technician Name', Icons.people),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             textField(complaintController, 'Complaint Number', Icons.settings),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             textField(jobNoController, 'JobCard Number', Icons.notes),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: enginNoController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Engine Number',
                 prefixIcon: Icon(Icons.engineering),
                 border: OutlineInputBorder(),
@@ -95,7 +100,7 @@ class _EditPageState extends State<EditPage> {
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: Icon(icon),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }
