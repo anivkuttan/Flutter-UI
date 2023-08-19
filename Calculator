@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyWidget(),
     );
@@ -14,8 +16,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
   @override
-  _MyWidgetState createState() => _MyWidgetState();
+  State createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<MyWidget> {
@@ -78,14 +82,14 @@ class _MyWidgetState extends State<MyWidget> {
                 child:
                     Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   Text(questionText,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 35,
                         color: Colors.black,
                       ),
                       textAlign: TextAlign.end), //topText
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   Text(resultText,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 40,
                       ),
                       textAlign: TextAlign.start),
@@ -94,51 +98,48 @@ class _MyWidgetState extends State<MyWidget> {
           ), //text Expaned
           Expanded(
             flex: 6,
-            child: Container(
-              //color: Colors.deepPurple,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
-                itemCount: items.length,
-                itemBuilder: (context, indext) {
-                  if (indext == 0) {
-                    return MyButton(
-                        buttonText: items[indext],
-                        buttonColor: Colors.red,
-                        // to make function like
-                        // buttonClicked :(){}
-                        // then inside put your function
-                        //like bellow
-                        buttonClicked: () {
-                          buttonClicked(items[indext]);
-                        });
-                  } else if (indext == 1) {
-                    return MyButton(
-                        buttonText: items[indext],
-                        buttonColor: Colors.green,
-                        buttonClicked: () {
-                          buttonClicked(items[indext]);
-                        });
-                  } else if (indext == 2 ||
-                      indext == 3 ||
-                      indext == 7 ||
-                      indext == 11 ||
-                      indext == 15) {
-                    return MyButton(
-                        buttonText: items[indext],
-                        buttonColor: Colors.deepOrange[300],
-                        buttonClicked: () {
-                          buttonClicked(items[indext]);
-                        });
-                  }
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4),
+              itemCount: items.length,
+              itemBuilder: (context, indext) {
+                if (indext == 0) {
                   return MyButton(
                       buttonText: items[indext],
-                      buttonColor: Colors.deepPurple,
+                      buttonColor: Colors.red,
+                      // to make function like
+                      // buttonClicked :(){}
+                      // then inside put your function
+                      //like bellow
                       buttonClicked: () {
                         buttonClicked(items[indext]);
                       });
-                }, //builder
-              ), //contai er
+                } else if (indext == 1) {
+                  return MyButton(
+                      buttonText: items[indext],
+                      buttonColor: Colors.green,
+                      buttonClicked: () {
+                        buttonClicked(items[indext]);
+                      });
+                } else if (indext == 2 ||
+                    indext == 3 ||
+                    indext == 7 ||
+                    indext == 11 ||
+                    indext == 15) {
+                  return MyButton(
+                      buttonText: items[indext],
+                      buttonColor: Colors.deepOrange[300],
+                      buttonClicked: () {
+                        buttonClicked(items[indext]);
+                      });
+                }
+                return MyButton(
+                    buttonText: items[indext],
+                    buttonColor: Colors.deepPurple,
+                    buttonClicked: () {
+                      buttonClicked(items[indext]);
+                    });
+              }, //builder
             ), //expanded
           ),
         ]) //column
@@ -148,24 +149,25 @@ class _MyWidgetState extends State<MyWidget> {
 }
 
 class MyButton extends StatelessWidget {
-  MyButton({this.buttonText, this.buttonColor, this.buttonClicked});
-  final String buttonText;
-  final Color buttonColor;
+  const MyButton(
+      {super.key, this.buttonText, this.buttonColor, this.buttonClicked});
+  final String? buttonText;
+  final Color? buttonColor;
   final buttonClicked;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       child: ElevatedButton(
         onPressed: buttonClicked,
-        child: Text(buttonText),
         style: ElevatedButton.styleFrom(
-          primary: buttonColor,
+          backgroundColor: buttonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-        ), //style
+        ),
+        child: Text(buttonText ?? 'h'), //style
       ), //button
     );
   }
