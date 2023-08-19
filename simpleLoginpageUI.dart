@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );
@@ -15,12 +17,14 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String userEmail;
+  String? userEmail;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isPasswordVisibile = true;
   final TextEditingController emailController = TextEditingController();
@@ -47,62 +51,62 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10),
             children: [
-              Text(
+              const Text(
                 'Hello Again!',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontSize: 30,
                     fontWeight: FontWeight.w600),
               ),
-              Text(
+              const Text(
                 'Welcome',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontSize: 30,
                     fontWeight: FontWeight.w600),
               ),
-              Text(
+              const Text(
                 'back',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontSize: 30,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: const Icon(Icons.email),
                       suffixIcon: emailController.text.isEmpty
-                          ? SizedBox(width: 0)
+                          ? const SizedBox(width: 0)
                           : IconButton(
-                              icon: Icon(Icons.close),
+                              icon: const Icon(Icons.close),
                               onPressed: () {
                                 setState(() {
                                   emailController.clear();
                                 });
                               }),
-                      contentPadding: EdgeInsets.all(8.0),
+                      contentPadding: const EdgeInsets.all(8.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       hintText: "Email",
                       filled: true,
                       fillColor: Colors.white),
-                  validator: (String value) {
-                    if (value.isEmpty) {
+                  validator: (String? value) {
+                    if (value?.isEmpty ?? false) {
                       return 'Please Enter The Email';
                     }
                     return null;
                   },
-                  onSaved: (String value) {
+                  onSaved: (String? value) {
                     setState(() {
-                      userEmail = value;
+                      userEmail = value ?? '';
                     });
                   }),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Card(
@@ -112,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextFormField(
                   obscureText: isPasswordVisibile,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
                       suffixIcon: IconButton(
                           icon: Icon(isPasswordVisibile
                               ? Icons.visibility_off
@@ -122,48 +126,49 @@ class _LoginPageState extends State<LoginPage> {
                               isPasswordVisibile = !isPasswordVisibile;
                             });
                           }),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 30.0),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 30.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       hintText: "Password"),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 height: 45,
                 width: deviceSize.width,
                 child: ElevatedButton(
-                  child: Text('Sign in'),
                   onPressed: () {
-                    var form = formKey.currentState;
+                    final form = formKey.currentState!;
                     if (form.validate()) {
                       form.save();
                     }
-                    formKey.currentState.validate();
+                    formKey.currentState!.validate();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
+                  child: const Text('Sign in'),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 TextButton(
-                  child: Text('Forgot Your Password ?'),
+                  child: const Text('Forgot Your Password ?'),
                   onPressed: () {},
                 ),
                 TextButton(
-                  child: Text('Sign Up'),
+                  child: const Text('Sign Up'),
                   onPressed: () {},
                 ),
               ]),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Image.asset("assets/images.jpeg", height: 300, fit: BoxFit.cover),
+              // Image.asset("assets/images.jpeg", height: 300, fit: BoxFit.cover),
             ]),
       ),
     );
